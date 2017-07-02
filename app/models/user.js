@@ -1,5 +1,7 @@
-const mongoose = require('mongoose'),
-      Schema   = mongoose.Schema;
+'use strict'
+
+var mongoose = require('mongoose');
+var Schema   = mongoose.Schema;
 
 const userSchema = new Schema({
   first_name : String,
@@ -18,6 +20,4 @@ const userSchema = new Schema({
 });
 
 
-const userModel = mongoose.model('User', userSchema);
-
-module.exports = userModel;
+module.exports = mongoose.model('User', userSchema)

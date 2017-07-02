@@ -5,6 +5,7 @@ module.exports = {
   getAllUsers: (req, res) => {
     User.find({}, (err, user) => {
       if(err) {res.send(err)}
+      console.log('blah');
       res.json(user);
     });
   },
@@ -17,19 +18,21 @@ module.exports = {
     newUser.password   = req.params.pw;
     newUser.save((err, user) => {
       if(err){res.send(err)}
+      console.log(newUser.first_name + ' Created');
       res.json(user);
+      mongoose.connection.close();
     });
   },
 
   readUser: (req, res) => {
-    User.FindOne({_id: req.params.id}, (err, user) => {
+    User.findOne({_id: req.params.id}, (err, user) => {
       if(err){res.send(err)}
       res.json(user)
     });
   },
 
   updateUser: (req, res) => {
-    User.FindOneAndUpdate({_id: req.params.id}, req.body, {new: true}, (err, user) => {
+    User.findOneAndUpdate({_id: req.params.id}, req.body, {new: true}, (err, user) => {
       if(err){res.send(err)}
       res.json(user);
     });

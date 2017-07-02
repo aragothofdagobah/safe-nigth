@@ -8,13 +8,15 @@ const express = require('express'),
 module.exports = router;
 
 //Handled by apiController
+router.get('/api/users', apiController.getAllUsers);
+router.post('/api/:fn/:ln/:em/:pw/', apiController.createUser);
+
 router.route('/api/:id')
       .get(apiController.readUser)
       .put(apiController.updateUser)
       .delete(apiController.removeUser);
 
-router.get('/api/users', apiController.getAllUsers);
-router.post('/api/:fn/:ln/:em/:pw/', apiController.createUser);
+
 
 //Handled by mainController
 router.get('/');
