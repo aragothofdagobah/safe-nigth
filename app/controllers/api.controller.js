@@ -1,12 +1,11 @@
-const User = require('../models/user');
+ const User = require('../models/user');
 
 module.exports = {
 
   getAllUsers: (req, res) => {
     User.find({}, (err, user) => {
       if(err) {res.send(err)}
-      console.log('blah');
-      res.json(user);
+      res.status(200).json(user);
     });
   },
 
@@ -20,7 +19,6 @@ module.exports = {
       if(err){res.send(err)}
       console.log(newUser.first_name + ' Created');
       res.json(user);
-      mongoose.connection.close();
     });
   },
 

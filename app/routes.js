@@ -19,18 +19,25 @@ router.route('/api/:id')
 
 
 //Handled by mainController
-router.get('/');
-router.get('/about');
-router.get('/contact');
+router.get('/', mainController.showHome);
+router.get('/about', mainController.showAbout);
+router.get('/contact', mainController.showContact);
+
+
+router.route('/login')
+      .get(mainController.showLogin)
+      .post(mainController.verifyLogin);
+
+router.post('/create', mainController.createUser)
 
 //Handled by profileController
-router.route('/:id')
-      .get()
+router.route('/user/:id')
+      .get((req,res)=>{res.send(req.params.id)})
       .put()
       .delete();
 
-router.post('/:id/approve');
-router.post('/:id/homeless');
+router.post('/user/:id/approve');
+router.post('/user/:id/homeless');
 
 //Handled by adminController
 router.route('/admin/:id')
