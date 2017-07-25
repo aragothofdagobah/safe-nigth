@@ -3,6 +3,7 @@
 module.exports = {
 
   getAllUsers: (req, res) => {
+    validate(req.headers.api_key);
     User.find({}, (err, user) => {
       if(err) {res.send(err)}
       res.status(200).json(user);
@@ -10,19 +11,17 @@ module.exports = {
   },
 
   createUser: (req, res) => {
-    var newUser = new User();
-    newUser.first_name = req.params.fn;
-    newUser.last_name  = req.params.ln;
-    newUser.email      = req.params.em;
-    newUser.password   = req.params.pw;
+    validate(req.headers.api_key);
+    var newUser = new User(req.body);
     newUser.save((err, user) => {
       if(err){res.send(err)}
-      console.log(newUser.first_name + ' Created');
+      console.log(newUser.firstName + ' Created');
       res.json(user);
     });
   },
 
   readUser: (req, res) => {
+    validate(req.headers.api_key);
     User.findOne({_id: req.params.id}, (err, user) => {
       if(err){res.send(err)}
       res.json(user)
@@ -30,6 +29,7 @@ module.exports = {
   },
 
   updateUser: (req, res) => {
+    validate(req.headers.api_key);
     User.findOneAndUpdate({_id: req.params.id}, req.body, {new: true}, (err, user) => {
       if(err){res.send(err)}
       res.json(user);
@@ -37,9 +37,19 @@ module.exports = {
   },
 
   removeUser: (req, res) => {
+    validate(req.headers.api_key);
     User.remove({_id: req.params.id}, (err, user) => {
       if(err){res.send(err)}
       res.json("User was succesfully deleted");
     });
+  }
+}
+
+function validate(key) {
+  if (key !== "key") {
+    res.status(415).send("Invalid API");
+  }
+  else {
+    console.log("Valid API key ");
   }
 }

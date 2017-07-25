@@ -29,7 +29,7 @@ module.exports = {
       else {
         res.send('Password was wrong')
       }
-    })
+    });
   },
 
   createUser: (req, res) => {

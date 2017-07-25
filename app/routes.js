@@ -9,9 +9,9 @@ module.exports = router;
 
 //Handled by apiController
 router.get('/api/users', apiController.getAllUsers);
-router.post('/api/:fn/:ln/:em/:pw/', apiController.createUser);
+router.post('/api/user/create', apiController.createUser);
 
-router.route('/api/:id')
+router.route('/api/user/:id')
       .get(apiController.readUser)
       .put(apiController.updateUser)
       .delete(apiController.removeUser);
